@@ -22,6 +22,8 @@ Go Get
 
 To use:
 
+    import "github.com/benji-vesterby/validator"
+    
     type testStruct struct {
     	valid bool
     }
