@@ -36,4 +36,3 @@ func IsValid(obj interface{}) (valid bool) {
 
 	return valid
 }
-

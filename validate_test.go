@@ -8,19 +8,19 @@ type testStruct struct {
 	valid bool
 }
 
-func(this testStruct) Validate() bool {
+func (this testStruct) Validate() bool {
 	return this.valid
 }
 
-type noInterfaceimpl struct {}
+type noInterfaceimpl struct{}
 
 func TestIsValid(t *testing.T) {
 	var nilobj *noInterfaceimpl
 
 	tests := []struct {
-		name string
+		name       string
 		toValidate interface{}
-		valid bool
+		valid      bool
 	}{
 		{
 			"Valid test w/validate method passing pointer",

@@ -1,5 +1,7 @@
 # Validator
 
+[![Build Status](https://travis-ci.org/benji-vesterby/validator.svg?branch=master)](https://travis-ci.org/benji-vesterby/validator)
+[![Coverage Status](https://coveralls.io/repos/github/benji-vesterby/validator/badge.svg)](https://coveralls.io/github/benji-vesterby/validator)
 [![GoDoc](https://godoc.org/github.com/benji-vesterby/validator?status.svg)](https://godoc.org/github.com/benji-vesterby/validator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
