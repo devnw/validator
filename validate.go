@@ -3,6 +3,8 @@ package validator
 import "reflect"
 
 // validator interface for checking to see if the struct has a Validate method assigned to it
+// NOTE: This implementation should not use a pointer receiver, otherwise it will not work for non-pointer instances
+// of structs
 type validator interface {
 	Validate() (valid bool)
 }
@@ -19,7 +21,6 @@ func IsValid(obj interface{}) (valid bool) {
 
 		// determine if the value is a pointer or not and whether it's nil if it is a pointer
 		if val.Kind() != reflect.Ptr || (val.Kind() == reflect.Ptr && !val.IsNil()) {
-			// TODO: Extend validate to read the struct parameters in and be able to use decoration to add more advanced automatic validation
 
 			// Using a type assertion check to see if the object implements the validator interface
 			// If it does then execute the validate method and assign that to the return value
