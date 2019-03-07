@@ -8,8 +8,8 @@ type testStruct struct {
 	valid bool
 }
 
-func (this testStruct) Validate() bool {
-	return this.valid
+func (testobj testStruct) Validate() bool {
+	return testobj.valid
 }
 
 type noInterfaceimpl struct{}
