@@ -1,4 +1,8 @@
-# validator
+# Validator
+
+[![GoDoc](https://godoc.org/github.com/benji-vesterby/validator?status.svg)](https://godoc.org/github.com/benji-vesterby/validator)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 Validator can be executed against any struct / interface to determine if it is valid. 
 
