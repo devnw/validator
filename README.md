@@ -1,8 +1,8 @@
 # Validator
 
-[![Build Status](https://travis-ci.org/benji-vesterby/validator.svg?branch=master)](https://travis-ci.org/benji-vesterby/validator)
-[![Go Report Card](https://goreportcard.com/badge/github.com/benji-vesterby/validator)](https://goreportcard.com/report/github.com/benji-vesterby/validator)
-[![GoDoc](https://godoc.org/github.com/benji-vesterby/validator?status.svg)](https://godoc.org/github.com/benji-vesterby/validator)
+[![Build Status](https://travis-ci.org/benjivesterby/validator.svg?branch=master)](https://travis-ci.org/benjivesterby/validator)
+[![Go Report Card](https://goreportcard.com/badge/github.com/benjivesterby/validator)](https://goreportcard.com/report/github.com/benjivesterby/validator)
+[![GoDoc](https://godoc.org/github.com/benjivesterby/validator?status.svg)](https://godoc.org/github.com/benjivesterby/validator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -16,15 +16,15 @@ To install:
 
 DEP
 
-`dep ensure -add github.com/benji-vesterby/validator`
+`dep ensure -add github.com/benjivesterby/validator`
 
 Go Get
 
-`go get github.com/benji-vesterby/validator`
+`go get github.com/benjivesterby/validator`
 
 To use:
 
-    import "github.com/benji-vesterby/validator"
+    import "github.com/benjivesterby/validator"
     
     type testStruct struct {
     	valid bool
@@ -41,4 +41,4 @@ To use:
     
 See unit tests for more examples
 
-https://github.com/benji-vesterby/validator/blob/master/validate_test.go
+https://github.com/benjivesterby/validator/blob/master/validate_test.go
