@@ -80,7 +80,9 @@ func IsValid(objs ...interface{}) bool {
 		case nil:
 			return false
 		case validator:
-			return v.Validate()
+			if !v.Validate() {
+				return false
+			}
 		case string:
 			if v == "" {
 				return false
@@ -109,7 +111,9 @@ func IsValid(objs ...interface{}) bool {
 		case float32:
 		case float64:
 		default:
-			return valid(v)
+			if !valid(v) {
+				return false
+			}
 		}
 	}
 
