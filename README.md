@@ -3,38 +3,46 @@
 ![CI](https://github.com/benjivesterby/validator/workflows/CI/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benjivesterby/validator)](https://goreportcard.com/report/github.com/benjivesterby/validator)
 [![codecov](https://codecov.io/gh/benjivesterby/validator/branch/master/graph/badge.svg)](https://codecov.io/gh/benjivesterby/validator)
-[![GoDoc](https://godoc.org/github.com/benjivesterby/validator?status.svg)](https://godoc.org/github.com/benjivesterby/validator)
+[![GoDoc](https://godoc.org/github.com/benjivesterby/validator?status.svg)](https://pkg.go.dev/github.com/benjivesterby/validator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
+Validator can be executed against any struct / interface to determine if it is valid.
 
-Validator can be executed against any struct / interface to determine if it is valid. 
+To install:
 
-The standard check executes a "nil" check against the value being passed into the validator. It then uses reflection to determine if the object is a pointer or not and whether the pointer is nil.
+`go get -u github.com/benjivesterby/validator`
 
-If it's a pointer and the value is nil then it returns invalid, if it's not a pointer or the value is not nil then it checks to see if the type of the object implements the Validator interface. If the object does not implement the interface then it returns valid because the object is non-nil. If it does implement the validator interface then it executes the validate method on the object after typecasting it. At this point the IsValid method will return the value returned from the Validate method.
+To use validator
 
-To install: 
+1. import `github.com/benjivesterby/validator`
+2. execute boolean validation: `validator.Valid(obj1, obj2, ..., objN)`
+3. execute validation assertion: `validator.Assert(obj1, obj2, ..., objN)`
 
-`go get github.com/benjivesterby/validator`
+`Valid()` returns a boolean indicating validity
 
-To use:
+`Assert()` returns a *nil* error if the inputs are valid, and returns an error for invalid arguments, and the error specifies the index of the erroneous value
 
-    import "github.com/benjivesterby/validator"
-    
-    type testStruct struct {
-    	valid bool
-    }
-    
-    // Implement the validate method on your struct
-    func(this testStruct) Validate() bool {
-    	return this.valid
-    }
-    
-    // This accepts an interface. If the interface passed to it is valid it returns true,
-    // otherwise it returns false. 
-    validator.IsValid(testStruct{true})
-    
-See unit tests for more examples
+To implement your own validator use the interface method `Validate() bool` as shown below:
 
-https://github.com/benjivesterby/validator/blob/master/validate_test.go
+```go
+import "github.com/benjivesterby/validator"
+
+type testStruct struct {
+    valid bool
+}
+
+// Implement the validate method on your struct
+func(this testStruct) Validate() bool {
+    return this.valid
+}
+
+// This accepts an interface. If the interface passed to it is valid it returns true,
+// otherwise it returns false.
+validator.Valid(testStruct{true})
+```
+
+This libary will check for *nil* first on any nillable type, then it uses a type swtich to check for validity on known types.
+
+* For slices it will indicate which element of the slice that is passed in is invalid when using `Assert`
+* Valid will also check individual slice indexes but will not indicate which is invalid since it only returns a `bool`
