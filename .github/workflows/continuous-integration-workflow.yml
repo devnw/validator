@@ -1,7 +1,11 @@
 name: CI
 
+
 # this is triggered on push to the repository
 on: [push, pull_request]
+
+env: 
+  CODECOV_TOKEN:80d7d11d-0f37-437e-8cad-de3e7b624191
 
 jobs:
   test:
@@ -17,5 +21,9 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: Install Coverage Tool
+      run: go get golang.org/x/tools/cmd/cover
     - name: Test
-      run: go test ./...
+      run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+    - name: Push Coverage to codecov.io
+      run: bash <(curl -s https://codecov.io/bash)
