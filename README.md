@@ -1,6 +1,6 @@
 # Validator
 
-[![Build Status](https://travis-ci.org/benjivesterby/validator.svg?branch=master)](https://travis-ci.org/benjivesterby/validator)
+![CI](https://github.com/benjivesterby/validator/workflows/CI/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benjivesterby/validator)](https://goreportcard.com/report/github.com/benjivesterby/validator)
 [![codecov](https://codecov.io/gh/benjivesterby/validator/branch/master/graph/badge.svg)](https://codecov.io/gh/benjivesterby/validator)
 [![GoDoc](https://godoc.org/github.com/benjivesterby/validator?status.svg)](https://godoc.org/github.com/benjivesterby/validator)
