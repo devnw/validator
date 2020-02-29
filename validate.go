@@ -46,20 +46,33 @@ func Assert(objs ...interface{}) error {
 				}
 			}
 		case int:
+			continue
 		case int8:
+			continue
 		case int16:
+			continue
 		case int32:
+			continue
 		case int64:
+			continue
 		case uint:
+			continue
 		case uint8:
+			continue
 		case uint16:
+			continue
 		case uint32:
+			continue
 		case uint64:
+			continue
 		case bool:
+			continue
 		case float32:
+			continue
 		case float64:
+			continue
 		default:
-			if !valid(obj) {
+			if !valid(obj) { // TODO: return index of error
 				return errors.New(msg)
 			}
 		}
@@ -68,9 +81,14 @@ func Assert(objs ...interface{}) error {
 	return nil
 }
 
-// IsValid reads in an object, and checks to see if the object implements the validator interface
-// if the object does then it executes the objects validate method and returns that
+// IsValid is DEPRECATED, replaced by Valid. This method will be available until version 1.1.0
 func IsValid(objs ...interface{}) bool {
+	return Valid(objs...)
+}
+
+// Valid reads in an object, and checks to see if the object implements the validator interface
+// if the object does then it executes the objects validate method and returns that
+func Valid(objs ...interface{}) bool {
 	if len(objs) == 0 {
 		return false
 	}
@@ -98,18 +116,31 @@ func IsValid(objs ...interface{}) bool {
 				}
 			}
 		case int:
+			continue
 		case int8:
+			continue
 		case int16:
+			continue
 		case int32:
+			continue
 		case int64:
+			continue
 		case uint:
+			continue
 		case uint8:
+			continue
 		case uint16:
+			continue
 		case uint32:
+			continue
 		case uint64:
+			continue
 		case bool:
+			continue
 		case float32:
+			continue
 		case float64:
+			continue
 		default:
 			if !valid(v) {
 				return false

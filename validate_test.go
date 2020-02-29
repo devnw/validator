@@ -14,19 +14,31 @@ func (testobj testStruct) Validate() bool {
 
 type noInterfaceimpl struct{}
 
-func TestIsValidNIL(t *testing.T) {
-	if IsValid(nil) != false {
-		t.Errorf("Test Failed")
+func getValids() (funcs []func(objs ...interface{}) bool) {
+	return []func(objs ...interface{}) bool{
+		IsValid,
+		Valid,
 	}
 }
 
-func TestIsValidEmpty(t *testing.T) {
-	if IsValid() != false {
-		t.Errorf("Test Failed")
+func TestValidNIL(t *testing.T) {
+
+	for _, f := range getValids() {
+		if f(nil) != false {
+			t.Errorf("Test Failed")
+		}
 	}
 }
 
-func TestIsValidString(t *testing.T) {
+func TestValidEmpty(t *testing.T) {
+	for _, f := range getValids() {
+		if f() != false {
+			t.Errorf("Test Failed")
+		}
+	}
+}
+
+func TestValidString(t *testing.T) {
 	tests := []struct {
 		name       string
 		toValidate string
@@ -44,14 +56,16 @@ func TestIsValidString(t *testing.T) {
 		},
 	}
 
-	for _, test := range tests {
-		if IsValid(test.toValidate) != test.valid {
-			t.Errorf("Test [%s] Failed", test.name)
+	for _, f := range getValids() {
+		for _, test := range tests {
+			if f(test.toValidate) != test.valid {
+				t.Errorf("Test [%s] Failed", test.name)
+			}
 		}
 	}
 }
 
-func TestIsValidStringSlice(t *testing.T) {
+func TestValidStringSlice(t *testing.T) {
 	tests := []struct {
 		name       string
 		toValidate []string
@@ -69,14 +83,16 @@ func TestIsValidStringSlice(t *testing.T) {
 		},
 	}
 
-	for _, test := range tests {
-		if IsValid(test.toValidate) != test.valid {
-			t.Errorf("Test [%s] Failed", test.name)
+	for _, f := range getValids() {
+		for _, test := range tests {
+			if f(test.toValidate) != test.valid {
+				t.Errorf("Test [%s] Failed", test.name)
+			}
 		}
 	}
 }
 
-func TestIsValidByteSlice(t *testing.T) {
+func TestValidByteSlice(t *testing.T) {
 	tests := []struct {
 		name       string
 		toValidate []byte
@@ -94,14 +110,16 @@ func TestIsValidByteSlice(t *testing.T) {
 		},
 	}
 
-	for _, test := range tests {
-		if IsValid(test.toValidate) != test.valid {
-			t.Errorf("Test [%s] Failed", test.name)
+	for _, f := range getValids() {
+		for _, test := range tests {
+			if f(test.toValidate) != test.valid {
+				t.Errorf("Test [%s] Failed", test.name)
+			}
 		}
 	}
 }
 
-func TestIsValid(t *testing.T) {
+func TestValid(t *testing.T) {
 	var nilobj *noInterfaceimpl
 
 	tests := []struct {
@@ -151,14 +169,178 @@ func TestIsValid(t *testing.T) {
 		},
 	}
 
+	for _, f := range getValids() {
+		for _, test := range tests {
+			if f(test.toValidate) != test.valid {
+				t.Errorf("Test [%s] Failed", test.name)
+			}
+		}
+	}
+}
+
+func TestValid_NotCoveredBaseTypes(t *testing.T) {
+	tests := []struct {
+		name       string
+		toValidate interface{}
+		valid      bool
+	}{
+		{
+			"int",
+			int(12),
+			true,
+		},
+		{
+			"int8",
+			int8(12),
+			true,
+		},
+		{
+			"int16",
+			int16(12),
+			true,
+		},
+		{
+			"int32",
+			int32(12),
+			true,
+		},
+		{
+			"int64",
+			int64(12),
+			true,
+		},
+		{
+			"uint",
+			uint(12),
+			true,
+		},
+		{
+			"uint8",
+			uint8(12),
+			true,
+		},
+		{
+			"uint16",
+			uint16(12),
+			true,
+		},
+		{
+			"uint32",
+			uint32(12),
+			true,
+		},
+		{
+			"uint64",
+			uint64(12),
+			true,
+		},
+		{
+			"bool",
+			bool(true),
+			true,
+		},
+		{
+			"float32",
+			float32(12.5),
+			true,
+		},
+		{
+			"float64",
+			float64(12.5),
+			true,
+		},
+	}
+
+	for _, f := range getValids() {
+		for _, test := range tests {
+			if f(test.toValidate) != test.valid {
+				t.Errorf("Test [%s] Failed", test.name)
+			}
+		}
+	}
+}
+
+func TestAssert_NotCoveredBaseTypes(t *testing.T) {
+	tests := []struct {
+		name       string
+		toValidate interface{}
+		valid      bool
+	}{
+		{
+			"int",
+			int(12),
+			true,
+		},
+		{
+			"int8",
+			int8(12),
+			true,
+		},
+		{
+			"int16",
+			int16(12),
+			true,
+		},
+		{
+			"int32",
+			int32(12),
+			true,
+		},
+		{
+			"int64",
+			int64(12),
+			true,
+		},
+		{
+			"uint",
+			uint(12),
+			true,
+		},
+		{
+			"uint8",
+			uint8(12),
+			true,
+		},
+		{
+			"uint16",
+			uint16(12),
+			true,
+		},
+		{
+			"uint32",
+			uint32(12),
+			true,
+		},
+		{
+			"uint64",
+			uint64(12),
+			true,
+		},
+		{
+			"bool",
+			bool(true),
+			true,
+		},
+		{
+			"float32",
+			float32(12.5),
+			true,
+		},
+		{
+			"float64",
+			float64(12.5),
+			true,
+		},
+	}
+
 	for _, test := range tests {
-		if IsValid(test.toValidate) != test.valid {
+		if Assert(test.toValidate) != nil {
 			t.Errorf("Test [%s] Failed", test.name)
 		}
 	}
 }
 
-func TestIsValid_Multiples(t *testing.T) {
+func TestValid_Multiples(t *testing.T) {
 	var nilobj *noInterfaceimpl
 
 	tests := []struct {
@@ -233,9 +415,11 @@ func TestIsValid_Multiples(t *testing.T) {
 		},
 	}
 
-	for _, test := range tests {
-		if IsValid(test.toValidate...) != test.valid {
-			t.Errorf("Test [%s] Failed", test.name)
+	for _, f := range getValids() {
+		for _, test := range tests {
+			if f(test.toValidate...) != test.valid {
+				t.Errorf("Test [%s] Failed", test.name)
+			}
 		}
 	}
 }
@@ -334,93 +518,185 @@ func TestAssert_NonBase(t *testing.T) {
 	}
 }
 
-func Benchmark_IsValid_ByteSlice(b *testing.B) {
+func Benchmark_Valid_ByteSlice(b *testing.B) {
 	var testobj = []byte{12, 12, 12}
 
 	for n := 0; n < b.N; n++ {
-		if !IsValid(testobj) {
+		if !Valid(testobj) {
 			b.Error("Invalid byte slice, expected valid")
 		}
 	}
 }
 
-func Benchmark_IsValid_StringSlice(b *testing.B) {
+func Benchmark_Valid_StringSlice(b *testing.B) {
 	var testobj = []string{"hello", "kitty", "slicey"}
 
 	for n := 0; n < b.N; n++ {
-		if !IsValid(testobj) {
+		if !Valid(testobj) {
 			b.Error("Invalid string slice, expected valid")
 		}
 	}
 }
 
-func Benchmark_IsValid_String(b *testing.B) {
+func Benchmark_Valid_String(b *testing.B) {
 	var testobj = "hello kitty"
 
 	for n := 0; n < b.N; n++ {
-		if !IsValid(testobj) {
+		if !Valid(testobj) {
 			b.Error("Invalid string, expected valid")
 		}
 	}
 }
 
-func Benchmark_IsValid_ValidWValidator(b *testing.B) {
+func Benchmark_Valid_ValidWValidator(b *testing.B) {
 	var testobj = testStruct{true}
 
 	for n := 0; n < b.N; n++ {
-		if !IsValid(testobj) {
+		if !Valid(testobj) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
 
 }
 
-func Benchmark_IsValid_ValidWOValidator(b *testing.B) {
+func Benchmark_Valid_ValidWOValidator(b *testing.B) {
 	var testobj = noInterfaceimpl{}
 
 	for n := 0; n < b.N; n++ {
-		if !IsValid(testobj) {
+		if !Valid(testobj) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
 
 }
 
-func Benchmark_IsValid_ValidPtrWValidator(b *testing.B) {
+func Benchmark_Valid_ValidPtrWValidator(b *testing.B) {
 	var testobj = &testStruct{true}
 
 	for n := 0; n < b.N; n++ {
-		if !IsValid(testobj) {
+		if !Valid(testobj) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
 
 }
 
-func Benchmark_IsValid_ValidPtrWOValidator(b *testing.B) {
+func Benchmark_Valid_ValidPtrWOValidator(b *testing.B) {
 	var testobj = &noInterfaceimpl{}
 
 	for n := 0; n < b.N; n++ {
-		if !IsValid(testobj) {
+		if !Valid(testobj) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
 }
 
-func Benchmark_IsValid_NILNonInterface(b *testing.B) {
+func Benchmark_Valid_NILNonInterface(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		if IsValid(nil) {
+		if Valid(nil) {
 			b.Error("Valid struct, expected invalid")
 		}
 	}
 }
 
-func Benchmark_IsValid_NIL(b *testing.B) {
+func Benchmark_Valid_NIL(b *testing.B) {
 	var testobj *noInterfaceimpl
 
 	for n := 0; n < b.N; n++ {
-		if IsValid(testobj) {
+		if Valid(testobj) {
 			b.Error("Valid struct, expected invalid")
+		}
+	}
+
+}
+
+func Benchmark_Assert_ByteSlice(b *testing.B) {
+	var testobj = []byte{12, 12, 12}
+
+	for n := 0; n < b.N; n++ {
+		if Assert(testobj) != nil {
+			b.Error("Invalid byte slice, expected valid")
+		}
+	}
+}
+
+func Benchmark_Assert_StringSlice(b *testing.B) {
+	var testobj = []string{"hello", "kitty", "slicey"}
+
+	for n := 0; n < b.N; n++ {
+		if Assert(testobj) != nil {
+			b.Error("Invalid string slice, expected valid")
+		}
+	}
+}
+
+func Benchmark_Assert_String(b *testing.B) {
+	var testobj = "hello kitty"
+
+	for n := 0; n < b.N; n++ {
+		if Assert(testobj) != nil {
+			b.Error("Invalid string, expected valid")
+		}
+	}
+}
+
+func Benchmark_Assert_AssertWValidator(b *testing.B) {
+	var testobj = testStruct{true}
+
+	for n := 0; n < b.N; n++ {
+		if Assert(testobj) != nil {
+			b.Error("Invalid struct, expected valid")
+		}
+	}
+
+}
+
+func Benchmark_Assert_AssertWOValidator(b *testing.B) {
+	var testobj = noInterfaceimpl{}
+
+	for n := 0; n < b.N; n++ {
+		if Assert(testobj) != nil {
+			b.Error("Invalid struct, expected valid")
+		}
+	}
+
+}
+
+func Benchmark_Assert_AssertPtrWAssertator(b *testing.B) {
+	var testobj = &testStruct{true}
+
+	for n := 0; n < b.N; n++ {
+		if Assert(testobj) != nil {
+			b.Error("Invalid struct, expected valid")
+		}
+	}
+
+}
+
+func Benchmark_Assert_AssertPtrWOAssertator(b *testing.B) {
+	var testobj = &noInterfaceimpl{}
+
+	for n := 0; n < b.N; n++ {
+		if Assert(testobj) != nil {
+			b.Error("Invalid struct, expected valid")
+		}
+	}
+}
+
+func Benchmark_Assert_NILNonInterface(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		if Assert(nil) == nil {
+			b.Error("Assert struct, expected invalid")
+		}
+	}
+}
+
+func Benchmark_Assert_NIL(b *testing.B) {
+	var testobj *noInterfaceimpl
+
+	for n := 0; n < b.N; n++ {
+		if Assert(testobj) == nil {
+			b.Error("Assert struct, expected invalid")
 		}
 	}
 
