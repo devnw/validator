@@ -18,6 +18,10 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - name: Checkout code
       uses: actions/checkout@v2
+      with: 
+        ref: ${GITHUB_REF##*/}
+    - name: Branch name
+      run: echo running on branch ${GITHUB_REF##*/}
     - name: Test
       run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
     - name: Push Coverage to codecov.io
