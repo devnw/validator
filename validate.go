@@ -1,3 +1,10 @@
+// Package validator sets up several methods for simple validation as well
+// as setting up an interface which when implemented allows for custom validation
+// logic by the implementor. `Valid()` returns a boolean indicating if the value(s)
+// passed into it are valid based on the different types. `Assert()` returns an error
+// indicating `nil` if the values are valid. Otherwise `Assert()` returns an error
+// indicating the index of the value(s) passed into it as to which was determined
+// to be invalid.
 package validator
 
 import (
