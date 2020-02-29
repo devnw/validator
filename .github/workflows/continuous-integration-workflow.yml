@@ -5,7 +5,7 @@ name: CI
 on: [push, pull_request]
 
 env: 
-  CODECOV_TOKEN:80d7d11d-0f37-437e-8cad-de3e7b624191
+  CODECOV_TOKEN: 80d7d11d-0f37-437e-8cad-de3e7b624191
 
 jobs:
   test:
