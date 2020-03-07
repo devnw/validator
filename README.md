@@ -1,6 +1,6 @@
 # Validator
 
-![CI](https://github.com/benjivesterby/validator/workflows/CI/badge.svg)
+[![CI](https://github.com/benjivesterby/validator/workflows/CI/badge.svg)](https://github.com/benjivesterby/validator/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benjivesterby/validator)](https://goreportcard.com/report/github.com/benjivesterby/validator)
 [![codecov](https://codecov.io/gh/benjivesterby/validator/branch/master/graph/badge.svg)](https://codecov.io/gh/benjivesterby/validator)
 [![GoDoc](https://godoc.org/github.com/benjivesterby/validator?status.svg)](https://pkg.go.dev/github.com/benjivesterby/validator)
