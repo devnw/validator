@@ -21,9 +21,11 @@ To use validator
 
 `Valid()` returns a boolean indicating validity
 
-`Assert()` returns a *nil* error if the inputs are valid, and returns an error for invalid arguments, and the error specifies the index of the erroneous value
+`Assert()` returns a *nil* error if the inputs are valid, and returns an error
+for invalid arguments, and the error specifies the index of the erroneous value
 
-To implement your own validator use the interface method `Validate() bool` as shown below:
+To implement your own validator use the interface method `Validate() bool` as
+shown below:
 
 ```go
 import "github.com/devnw/validator"
@@ -42,7 +44,11 @@ func(this testStruct) Validate() bool {
 validator.Valid(testStruct{true})
 ```
 
-This libary will check for *nil* first on any nillable type, then it uses a type swtich to check for validity on known types.
+This libary will check for *nil* first on any nillable type, then it uses a type
+swtich to check for validity on known types.
 
-* For slices it will indicate which element of the slice that is passed in is invalid when using `Assert`
-* Valid will also check individual slice indexes but will not indicate which is invalid since it only returns a `bool`
+* For slices it will indicate which element of the slice that is passed in is
+invalid when using `Assert`
+
+* Valid will also check individual slice indexes but will not indicate which is
+invalid since it only returns a `bool`
