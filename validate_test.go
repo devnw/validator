@@ -387,7 +387,7 @@ func TestValid_Multiples(t *testing.T) {
 }
 
 func TestAssert_NIL(t *testing.T) {
-	result := "empty list passed to asert"
+	result := "validation error -empty argument list passed to assert- argument at index [0] is invalid"
 	if err := Assert(); err != nil {
 		if err.Error() != result {
 			t.Errorf("Test Failed '%s != %s'", err.Error(), result)
@@ -398,7 +398,7 @@ func TestAssert_NIL(t *testing.T) {
 }
 
 func TestAssert_Empty(t *testing.T) {
-	result := "empty list passed to asert"
+	result := "validation error -empty argument list passed to assert- argument at index [0] is invalid"
 	if err := Assert(); err != nil {
 		if err.Error() != result {
 			t.Errorf("Test Failed '%s != %s'", err.Error(), result)

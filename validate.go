@@ -10,8 +10,6 @@ package validator
 import (
 	"reflect"
 	"strconv"
-
-	"github.com/pkg/errors"
 )
 
 // validator interface for checking to see if the struct has a Validate method assigned to it
@@ -26,7 +24,10 @@ type validator interface {
 // assertion and a nil error returns indicates validity
 func Assert(objs ...interface{}) error {
 	if len(objs) == 0 {
-		return errors.New("empty list passed to asert")
+		return ValidationError{
+			Message: "empty argument list passed to assert",
+			Index:   0,
+		}
 	}
 
 	for i, obj := range objs {
