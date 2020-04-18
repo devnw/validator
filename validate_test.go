@@ -58,9 +58,12 @@ func TestValidString(t *testing.T) {
 
 	for _, f := range getValids() {
 		for _, test := range tests {
-			if f(test.toValidate) != test.valid {
-				t.Errorf("Test [%s] Failed", test.name)
-			}
+			t.Run(test.name, func(t *testing.T) {
+				if f(test.toValidate) != test.valid {
+					t.Errorf("Test [%s] Failed", test.name)
+				}
+
+			})
 		}
 	}
 }
@@ -85,9 +88,11 @@ func TestValidStringSlice(t *testing.T) {
 
 	for _, f := range getValids() {
 		for _, test := range tests {
-			if f(test.toValidate) != test.valid {
-				t.Errorf("Test [%s] Failed", test.name)
-			}
+			t.Run(test.name, func(t *testing.T) {
+				if f(test.toValidate) != test.valid {
+					t.Errorf("Test [%s] Failed", test.name)
+				}
+			})
 		}
 	}
 }
@@ -112,9 +117,11 @@ func TestValidByteSlice(t *testing.T) {
 
 	for _, f := range getValids() {
 		for _, test := range tests {
-			if f(test.toValidate) != test.valid {
-				t.Errorf("Test [%s] Failed", test.name)
-			}
+			t.Run(test.name, func(t *testing.T) {
+				if f(test.toValidate) != test.valid {
+					t.Errorf("Test [%s] Failed", test.name)
+				}
+			})
 		}
 	}
 }
@@ -171,19 +178,23 @@ func TestValid(t *testing.T) {
 
 	for _, f := range getValids() {
 		for _, test := range tests {
-			if f(test.toValidate) != test.valid {
-				t.Errorf("Test [%s] Failed", test.name)
-			}
+			t.Run(test.name, func(t *testing.T) {
+				if f(test.toValidate) != test.valid {
+					t.Errorf("Test [%s] Failed", test.name)
+				}
+			})
 		}
 	}
 }
 
-func TestValid_NotCoveredBaseTypes(t *testing.T) {
-	tests := []struct {
-		name       string
-		toValidate interface{}
-		valid      bool
-	}{
+type baseTest struct {
+	name       string
+	toValidate interface{}
+	valid      bool
+}
+
+func baseTests() []baseTest {
+	return []baseTest{
 		{
 			"int",
 			int(12),
@@ -235,6 +246,11 @@ func TestValid_NotCoveredBaseTypes(t *testing.T) {
 			true,
 		},
 		{
+			"uintptr",
+			uintptr(12),
+			true,
+		},
+		{
 			"bool",
 			bool(true),
 			true,
@@ -249,94 +265,38 @@ func TestValid_NotCoveredBaseTypes(t *testing.T) {
 			float64(12.5),
 			true,
 		},
+		{
+			"complex128",
+			complex128(12.5),
+			true,
+		},
+		{
+			"complex64",
+			complex64(12.5),
+			true,
+		},
 	}
+}
 
+func TestValid_NotCoveredBaseTypes(t *testing.T) {
 	for _, f := range getValids() {
-		for _, test := range tests {
-			if f(test.toValidate) != test.valid {
-				t.Errorf("Test [%s] Failed", test.name)
-			}
+		for _, test := range baseTests() {
+			t.Run(test.name, func(t *testing.T) {
+				if f(test.toValidate) != test.valid {
+					t.Errorf("Test [%s] Failed", test.name)
+				}
+			})
 		}
 	}
 }
 
 func TestAssert_NotCoveredBaseTypes(t *testing.T) {
-	tests := []struct {
-		name       string
-		toValidate interface{}
-		valid      bool
-	}{
-		{
-			"int",
-			int(12),
-			true,
-		},
-		{
-			"int8",
-			int8(12),
-			true,
-		},
-		{
-			"int16",
-			int16(12),
-			true,
-		},
-		{
-			"int32",
-			int32(12),
-			true,
-		},
-		{
-			"int64",
-			int64(12),
-			true,
-		},
-		{
-			"uint",
-			uint(12),
-			true,
-		},
-		{
-			"uint8",
-			uint8(12),
-			true,
-		},
-		{
-			"uint16",
-			uint16(12),
-			true,
-		},
-		{
-			"uint32",
-			uint32(12),
-			true,
-		},
-		{
-			"uint64",
-			uint64(12),
-			true,
-		},
-		{
-			"bool",
-			bool(true),
-			true,
-		},
-		{
-			"float32",
-			float32(12.5),
-			true,
-		},
-		{
-			"float64",
-			float64(12.5),
-			true,
-		},
-	}
-
-	for _, test := range tests {
-		if Assert(test.toValidate) != nil {
-			t.Errorf("Test [%s] Failed", test.name)
-		}
+	for _, test := range baseTests() {
+		t.Run(test.name, func(t *testing.T) {
+			if Assert(test.toValidate) != nil {
+				t.Errorf("Test [%s] Failed", test.name)
+			}
+		})
 	}
 }
 
@@ -417,9 +377,11 @@ func TestValid_Multiples(t *testing.T) {
 
 	for _, f := range getValids() {
 		for _, test := range tests {
-			if f(test.toValidate...) != test.valid {
-				t.Errorf("Test [%s] Failed", test.name)
-			}
+			t.Run(test.name, func(t *testing.T) {
+				if f(test.toValidate...) != test.valid {
+					t.Errorf("Test [%s] Failed", test.name)
+				}
+			})
 		}
 	}
 }
@@ -448,7 +410,7 @@ func TestAssert_Empty(t *testing.T) {
 
 func TestAssert_StringSlice(t *testing.T) {
 
-	result := "parameter at index [0] is invalid | [empty string at index [1] in []string]"
+	result := "validation error -empty string in slice at index 1- argument at index [0] | type [[]string] is invalid"
 	if err := Assert([]string{"testy index 0", "", "testy index 1"}); err != nil {
 		if err.Error() != result {
 			t.Errorf("TestAssert_String Failed `%s` != `%s`", err.Error(), result)
@@ -460,7 +422,7 @@ func TestAssert_StringSlice(t *testing.T) {
 
 func TestAssert_ByteSlice(t *testing.T) {
 
-	result := "parameter at index [0] is invalid | [empty []byte]"
+	result := "validation error -empty slice- argument at index [0] | type [[]uint8] is invalid"
 	if err := Assert([]byte{}); err != nil {
 		if err.Error() != result {
 			t.Errorf("TestAssert_ByteSlice Failed `%s` != `%s`", err.Error(), result)
@@ -472,7 +434,7 @@ func TestAssert_ByteSlice(t *testing.T) {
 
 func TestAssert_String(t *testing.T) {
 
-	result := "parameter at index [0] is invalid | [empty string]"
+	result := "validation error -empty string- argument at index [0] | type [string] is invalid"
 	if err := Assert(""); err != nil {
 		if err.Error() != result {
 			t.Errorf("TestAssert_String Failed `%s` != `%s`", err.Error(), result)
@@ -493,28 +455,30 @@ func TestAssert_NonBase(t *testing.T) {
 		{
 			"Index 1 - Failed Validator",
 			[]interface{}{&testStruct{true}, &testStruct{false}, &testStruct{true}},
-			"parameter at index [1] is invalid | [validator failed]",
+			"validation error -nil value- argument at index [1] | type [*validator.testStruct] is invalid",
 		},
 		{
 			"Index 1 - NIL",
 			[]interface{}{&testStruct{true}, nil, &testStruct{true}},
-			"parameter at index [1] is invalid | [nil]",
+			"validation error -nil value- argument at index [1] | type [int] is invalid",
 		},
 		{
 			"Index 1 - NIL Object",
 			[]interface{}{&testStruct{true}, nilobj, &testStruct{true}},
-			"parameter at index [1] is invalid",
+			"validation error -invalid at reflection check- argument at index [1] | type [*validator.noInterfaceimpl] is invalid",
 		},
 	}
 
 	for _, test := range tests {
-		if err := Assert(test.toValidate...); err != nil {
-			if err.Error() != test.result {
-				t.Errorf("Test [%s] Failed `%s` != `%s`", test.name, err.Error(), test.result)
+		t.Run(test.name, func(t *testing.T) {
+			if err := Assert(test.toValidate...); err != nil {
+				if err.Error() != test.result {
+					t.Errorf("Test [%s] Failed `%s` != `%s`", test.name, err.Error(), test.result)
+				}
+			} else {
+				t.Errorf("Test [%s] Failed empty error", test.name)
 			}
-		} else {
-			t.Errorf("Test [%s] Failed empty error", test.name)
-		}
+		})
 	}
 }
 

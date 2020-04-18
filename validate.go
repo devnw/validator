@@ -8,8 +8,8 @@
 package validator
 
 import (
-	"fmt"
 	"reflect"
+	"strconv"
 
 	"github.com/pkg/errors"
 )
@@ -30,57 +30,59 @@ func Assert(objs ...interface{}) error {
 	}
 
 	for i, obj := range objs {
-		msg := fmt.Sprintf("parameter at index [%v] is invalid", i)
 		switch v := obj.(type) {
 		case nil:
-			return errors.Errorf("%s | [nil]", msg)
+			return ValidationError{
+				Message: "nil value",
+				Index:   i,
+				Type:    reflect.TypeOf(i),
+			}
 		case validator:
 			if !v.Validate() {
-				return errors.Errorf("%s | [validator failed]", msg)
+				return ValidationError{
+					Message:          "nil value",
+					Index:            i,
+					Type:             reflect.TypeOf(obj),
+					ValidatorFailure: true,
+				}
 			}
 		case string:
 			if v == "" {
-				return errors.Errorf("%s | [empty string]", msg)
+				return ValidationError{
+					Message: "empty string",
+					Index:   i,
+					Type:    reflect.TypeOf(obj),
+				}
 			}
 		case []byte:
 			if len(v) == 0 {
-				return errors.Errorf("%s | [empty []byte]", msg)
+				return ValidationError{
+					Message: "empty slice",
+					Index:   i,
+					Type:    reflect.TypeOf(obj),
+				}
 			}
 		case []string:
 			for j, s := range v {
 				if s == "" {
-					return errors.Errorf("%s | [empty string at index [%v] in []string]", msg, j)
+					return ValidationError{
+						Message: "empty string in slice at index " + strconv.Itoa(j),
+						Index:   i,
+						Type:    reflect.TypeOf(obj),
+					}
 				}
 			}
-		case int:
-			continue
-		case int8:
-			continue
-		case int16:
-			continue
-		case int32:
-			continue
-		case int64:
-			continue
-		case uint:
-			continue
-		case uint8:
-			continue
-		case uint16:
-			continue
-		case uint32:
-			continue
-		case uint64:
-			continue
-		case bool:
-			continue
-		case float32:
-			continue
-		case float64:
+		case int, int8, int16, int32, int64, uint, uint8,
+			uint16, uint32, uint64, uintptr, bool,
+			float32, float64, complex128, complex64:
 			continue
 		default:
 			if !valid(obj) { // TODO: return index of error
-				return errors.New(msg)
+				return ValidationError{
+					Message: "invalid at reflection check",
+					Index:   i,
+					Type:    reflect.TypeOf(obj),
+				}
 			}
 		}
 	}
@@ -122,31 +124,9 @@ func Valid(objs ...interface{}) bool {
 					return false
 				}
 			}
-		case int:
-			continue
-		case int8:
-			continue
-		case int16:
-			continue
-		case int32:
-			continue
-		case int64:
-			continue
-		case uint:
-			continue
-		case uint8:
-			continue
-		case uint16:
-			continue
-		case uint32:
-			continue
-		case uint64:
-			continue
-		case bool:
-			continue
-		case float32:
-			continue
-		case float64:
+		case int, int8, int16, int32, int64, uint, uint8,
+			uint16, uint32, uint64, uintptr, bool,
+			float32, float64, complex128, complex64:
 			continue
 		default:
 			if !valid(v) {
