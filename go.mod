@@ -1,4 +1,4 @@
-module github.com/benjivesterby/validator
+module github.com/devnw/validator
 
 go 1.13
 

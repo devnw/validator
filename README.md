@@ -1,9 +1,9 @@
 # Validator
 
-[![CI](https://github.com/benjivesterby/validator/workflows/CI/badge.svg)](https://github.com/benjivesterby/validator/actions)
-[![Go Report Card](https://goreportcard.com/badge/github.com/benjivesterby/validator)](https://goreportcard.com/report/github.com/benjivesterby/validator)
-[![codecov](https://codecov.io/gh/benjivesterby/validator/branch/master/graph/badge.svg)](https://codecov.io/gh/benjivesterby/validator)
-[![GoDoc](https://godoc.org/github.com/benjivesterby/validator?status.svg)](https://pkg.go.dev/github.com/benjivesterby/validator)
+[![CI](https://github.com/devnw/validator/workflows/CI/badge.svg)](https://github.com/devnw/validator/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/devnw/validator)](https://goreportcard.com/report/github.com/devnw/validator)
+[![codecov](https://codecov.io/gh/devnw/validator/branch/master/graph/badge.svg)](https://codecov.io/gh/devnw/validator)
+[![GoDoc](https://godoc.org/github.com/devnw/validator?status.svg)](https://pkg.go.dev/github.com/devnw/validator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
@@ -11,11 +11,11 @@ Validator can be executed against any struct / interface to determine if it is v
 
 To install:
 
-`go get -u github.com/benjivesterby/validator`
+`go get -u github.com/devnw/validator`
 
 To use validator
 
-1. import `github.com/benjivesterby/validator`
+1. import `github.com/devnw/validator`
 2. execute boolean validation: `validator.Valid(obj1, obj2, ..., objN)`
 3. execute validation assertion: `validator.Assert(obj1, obj2, ..., objN)`
 
@@ -26,7 +26,7 @@ To use validator
 To implement your own validator use the interface method `Validate() bool` as shown below:
 
 ```go
-import "github.com/benjivesterby/validator"
+import "github.com/devnw/validator"
 
 type testStruct struct {
     valid bool
