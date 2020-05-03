@@ -44,8 +44,8 @@ func(this testStruct) Validate() bool {
 validator.Valid(testStruct{true})
 ```
 
-This libary will check for *nil* first on any nillable type, then it uses a type
-swtich to check for validity on known types.
+This library will check for *nil* first on any nillable type, then it uses a type
+switch to check for validity on known types.
 
 * For slices it will indicate which element of the slice that is passed in is
 invalid when using `Assert`

@@ -1,3 +1,8 @@
+// Copyright © 2019 Developer Network, LLC
+//
+// This file is subject to the terms and conditions defined in
+// file 'LICENSE', which is part of this source code package.
+
 // Package validator sets up several methods for simple validation as well
 // as setting up an interface which when implemented allows for custom validation
 // logic by the implementor. `Valid()` returns a boolean indicating if the value(s)
