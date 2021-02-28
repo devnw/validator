@@ -1,3 +1,3 @@
-module github.com/devnw/validator
+module devnw.com/validator
 
 go 1.14
