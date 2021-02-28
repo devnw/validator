@@ -10,7 +10,7 @@
 // indicating `nil` if the values are valid. Otherwise `Assert()` returns an error
 // indicating the index of the value(s) passed into it as to which was determined
 // to be invalid.
-package validator // import github.com/devnw/validator
+package validator // import "github.com/devnw/validator"
 
 import (
 	"reflect"
