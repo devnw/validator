@@ -145,11 +145,9 @@ func Valid(objs ...interface{}) bool {
 }
 
 func valid(obj interface{}) (valid bool) {
-
 	// Using reflection pull the type associated with the object that is passed in. nil types are invalid.
 	var tp reflect.Type
 	if tp = reflect.TypeOf(obj); tp != nil {
-
 		val := reflect.ValueOf(obj)
 
 		// determine if the value is a pointer or not and whether it's nil if it is a pointer

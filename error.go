@@ -49,7 +49,6 @@ func (e ValidationError) Error() string {
 // so that the error can be properly printed
 // by the fmt printers, etc...
 func (e ValidationError) String() string {
-
 	arg := "argument at index [" + strconv.Itoa(e.Index)
 
 	if e.Type != nil {

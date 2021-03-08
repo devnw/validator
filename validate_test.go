@@ -22,10 +22,9 @@ func getValids() (funcs []func(objs ...interface{}) bool) {
 }
 
 func TestValidNIL(t *testing.T) {
-
 	for _, f := range getValids() {
 		if f(nil) != false {
-			t.Errorf("Test Failed")
+			t.Fatalf("Test Failed")
 		}
 	}
 }
@@ -33,7 +32,7 @@ func TestValidNIL(t *testing.T) {
 func TestValidEmpty(t *testing.T) {
 	for _, f := range getValids() {
 		if f() != false {
-			t.Errorf("Test Failed")
+			t.Fatalf("Test Failed")
 		}
 	}
 }
@@ -60,9 +59,8 @@ func TestValidString(t *testing.T) {
 		for _, test := range tests {
 			t.Run(test.name, func(t *testing.T) {
 				if f(test.toValidate) != test.valid {
-					t.Errorf("Test [%s] Failed", test.name)
+					t.Fatalf("Test [%s] Failed", test.name)
 				}
-
 			})
 		}
 	}
@@ -90,7 +88,7 @@ func TestValidStringSlice(t *testing.T) {
 		for _, test := range tests {
 			t.Run(test.name, func(t *testing.T) {
 				if f(test.toValidate) != test.valid {
-					t.Errorf("Test [%s] Failed", test.name)
+					t.Fatalf("Test [%s] Failed", test.name)
 				}
 			})
 		}
@@ -119,7 +117,7 @@ func TestValidByteSlice(t *testing.T) {
 		for _, test := range tests {
 			t.Run(test.name, func(t *testing.T) {
 				if f(test.toValidate) != test.valid {
-					t.Errorf("Test [%s] Failed", test.name)
+					t.Fatalf("Test [%s] Failed", test.name)
 				}
 			})
 		}
@@ -180,7 +178,7 @@ func TestValid(t *testing.T) {
 		for _, test := range tests {
 			t.Run(test.name, func(t *testing.T) {
 				if f(test.toValidate) != test.valid {
-					t.Errorf("Test [%s] Failed", test.name)
+					t.Fatalf("Test [%s] Failed", test.name)
 				}
 			})
 		}
@@ -283,7 +281,7 @@ func TestValid_NotCoveredBaseTypes(t *testing.T) {
 		for _, test := range baseTests() {
 			t.Run(test.name, func(t *testing.T) {
 				if f(test.toValidate) != test.valid {
-					t.Errorf("Test [%s] Failed", test.name)
+					t.Fatalf("Test [%s] Failed", test.name)
 				}
 			})
 		}
@@ -294,7 +292,7 @@ func TestAssert_NotCoveredBaseTypes(t *testing.T) {
 	for _, test := range baseTests() {
 		t.Run(test.name, func(t *testing.T) {
 			if Assert(test.toValidate) != nil {
-				t.Errorf("Test [%s] Failed", test.name)
+				t.Fatalf("Test [%s] Failed", test.name)
 			}
 		})
 	}
@@ -379,68 +377,65 @@ func TestValid_Multiples(t *testing.T) {
 		for _, test := range tests {
 			t.Run(test.name, func(t *testing.T) {
 				if f(test.toValidate...) != test.valid {
-					t.Errorf("Test [%s] Failed", test.name)
+					t.Fatalf("Test [%s] Failed", test.name)
 				}
 			})
 		}
 	}
 }
 
+const resultAssert = "validation error -empty argument list passed to assert- argument at index [0] is invalid"
+
 func TestAssert_NIL(t *testing.T) {
-	result := "validation error -empty argument list passed to assert- argument at index [0] is invalid"
 	if err := Assert(); err != nil {
-		if err.Error() != result {
-			t.Errorf("Test Failed '%s != %s'", err.Error(), result)
+		if err.Error() != resultAssert {
+			t.Fatalf("Test Failed '%s != %s'", err.Error(), resultAssert)
 		}
 	} else {
-		t.Errorf("TestAssert_Empty Failed empty error")
+		t.Fatalf("TestAssert_Empty Failed empty error")
 	}
 }
 
 func TestAssert_Empty(t *testing.T) {
-	result := "validation error -empty argument list passed to assert- argument at index [0] is invalid"
 	if err := Assert(); err != nil {
-		if err.Error() != result {
-			t.Errorf("Test Failed '%s != %s'", err.Error(), result)
+		if err.Error() != resultAssert {
+			t.Fatalf("Test Failed '%s != %s'", err.Error(), resultAssert)
 		}
 	} else {
-		t.Errorf("TestAssert_Empty Failed empty error")
+		t.Fatalf("TestAssert_Empty Failed empty error")
 	}
 }
 
 func TestAssert_StringSlice(t *testing.T) {
-
 	result := "validation error -empty string in slice at index 1- argument at index [0] | type [[]string] is invalid"
 	if err := Assert([]string{"testy index 0", "", "testy index 1"}); err != nil {
 		if err.Error() != result {
-			t.Errorf("TestAssert_String Failed `%s` != `%s`", err.Error(), result)
+			t.Fatalf("TestAssert_String Failed `%s` != `%s`", err.Error(), result)
 		}
 	} else {
-		t.Errorf("TestAssert_String Failed empty error")
+		t.Fatalf("TestAssert_String Failed empty error")
 	}
 }
 
 func TestAssert_ByteSlice(t *testing.T) {
-
 	result := "validation error -empty slice- argument at index [0] | type [[]uint8] is invalid"
 	if err := Assert([]byte{}); err != nil {
 		if err.Error() != result {
-			t.Errorf("TestAssert_ByteSlice Failed `%s` != `%s`", err.Error(), result)
+			t.Fatalf("TestAssert_ByteSlice Failed `%s` != `%s`", err.Error(), result)
 		}
 	} else {
-		t.Errorf("TestAssert_ByteSlice Failed empty error")
+		t.Fatalf("TestAssert_ByteSlice Failed empty error")
 	}
 }
 
 func TestAssert_String(t *testing.T) {
-
 	result := "validation error -empty string- argument at index [0] | type [string] is invalid"
 	if err := Assert(""); err != nil {
 		if err.Error() != result {
-			t.Errorf("TestAssert_String Failed `%s` != `%s`", err.Error(), result)
+			t.Fatalf("TestAssert_String Failed `%s` != `%s`", err.Error(), result)
 		}
 	} else {
-		t.Errorf("TestAssert_String Failed empty error")
+		t.Fatalf("TestAssert_String Failed empty error")
 	}
 }
 
@@ -473,10 +468,10 @@ func TestAssert_NonBase(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			if err := Assert(test.toValidate...); err != nil {
 				if err.Error() != test.result {
-					t.Errorf("Test [%s] Failed `%s` != `%s`", test.name, err.Error(), test.result)
+					t.Fatalf("Test [%s] Failed `%s` != `%s`", test.name, err.Error(), test.result)
 				}
 			} else {
-				t.Errorf("Test [%s] Failed empty error", test.name)
+				t.Fatalf("Test [%s] Failed empty error", test.name)
 			}
 		})
 	}
@@ -520,7 +515,6 @@ func Benchmark_Valid_ValidWValidator(b *testing.B) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
-
 }
 
 func Benchmark_Valid_ValidWOValidator(b *testing.B) {
@@ -531,7 +525,6 @@ func Benchmark_Valid_ValidWOValidator(b *testing.B) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
-
 }
 
 func Benchmark_Valid_ValidPtrWValidator(b *testing.B) {
@@ -542,7 +535,6 @@ func Benchmark_Valid_ValidPtrWValidator(b *testing.B) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
-
 }
 
 func Benchmark_Valid_ValidPtrWOValidator(b *testing.B) {
@@ -571,7 +563,6 @@ func Benchmark_Valid_NIL(b *testing.B) {
 			b.Error("Valid struct, expected invalid")
 		}
 	}
-
 }
 
 func Benchmark_Assert_ByteSlice(b *testing.B) {
@@ -612,7 +603,6 @@ func Benchmark_Assert_AssertWValidator(b *testing.B) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
-
 }
 
 func Benchmark_Assert_AssertWOValidator(b *testing.B) {
@@ -623,7 +613,6 @@ func Benchmark_Assert_AssertWOValidator(b *testing.B) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
-
 }
 
 func Benchmark_Assert_AssertPtrWAssertator(b *testing.B) {
@@ -634,7 +623,6 @@ func Benchmark_Assert_AssertPtrWAssertator(b *testing.B) {
 			b.Error("Invalid struct, expected valid")
 		}
 	}
-
 }
 
 func Benchmark_Assert_AssertPtrWOAssertator(b *testing.B) {
@@ -663,5 +651,4 @@ func Benchmark_Assert_NIL(b *testing.B) {
 			b.Error("Assert struct, expected invalid")
 		}
 	}
-
 }
