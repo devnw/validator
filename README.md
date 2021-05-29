@@ -1,6 +1,6 @@
 # Validator
 
-[![CI](https://devnw.com/validator/workflows/CI/badge.svg)](https://devnw.com/validator/actions)
+[![CI](https://devnw.com/validator/actions/workflows/build.yml/badge.svg)](https://devnw.com/validator/actions)
 [![Go Report Card](https://goreportcard.com/badge/devnw.com/validator)](https://goreportcard.com/report/devnw.com/validator)
 [![codecov](https://codecov.io/gh/devnw/validator/branch/main/graph/badge.svg)](https://codecov.io/gh/devnw/validator)
 [![Go Reference](https://pkg.go.dev/badge/devnw.com/validator.svg)](https://pkg.go.dev/devnw.com/validator)
