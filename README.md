@@ -1,9 +1,9 @@
 # Validator
 
-[![CI](https://devnw.com/validator/actions/workflows/build.yml/badge.svg)](https://devnw.com/validator/actions)
-[![Go Report Card](https://goreportcard.com/badge/devnw.com/validator)](https://goreportcard.com/report/devnw.com/validator)
+[![Build & Test](https://github.com/devnw/validator/actions/workflows/build.yml/badge.svg)](https://github.com/devnw/validator/actions/workflows/build.yml)
+[![Go Report Card](https://goreportcard.com/badge/go.devnw.com/validator)](https://goreportcard.com/report/go.devnw.com/validator)
 [![codecov](https://codecov.io/gh/devnw/validator/branch/main/graph/badge.svg)](https://codecov.io/gh/devnw/validator)
-[![Go Reference](https://pkg.go.dev/badge/devnw.com/validator.svg)](https://pkg.go.dev/devnw.com/validator)
+[![Go Reference](https://pkg.go.dev/badge/go.devnw.com/validator.svg)](https://pkg.go.dev/go.devnw.com/validator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
@@ -11,11 +11,11 @@ Validator can be executed against any struct / interface to determine if it is v
 
 To install:
 
-`go get -u devnw.com/validator`
+`go get -u go.devnw.com/validator`
 
 To use validator
 
-1. import `devnw.com/validator`
+1. import `go.devnw.com/validator`
 2. execute boolean validation: `validator.Valid(obj1, obj2, ..., objN)`
 3. execute validation assertion: `validator.Assert(obj1, obj2, ..., objN)`
 
@@ -28,7 +28,7 @@ To implement your own validator use the interface method `Validate() bool` as
 shown below:
 
 ```go
-import "devnw.com/validator"
+import "go.devnw.com/validator"
 
 type testStruct struct {
     valid bool

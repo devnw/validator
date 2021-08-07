@@ -1,3 +1,3 @@
-module devnw.com/validator
+module go.devnw.com/validator
 
-go 1.14
+go 1.16
